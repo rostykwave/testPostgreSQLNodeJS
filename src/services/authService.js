@@ -1,18 +1,34 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { pool } = require("../db/connection");
-const { NotAuthorizedError } = require("../helpers/errors");
+const {
+  NotAuthorizedError,
+  AlreadyRegisteredError,
+} = require("../helpers/errors");
 
 const registration = async (registrationData) => {
   const { first_name, last_name, email, phone, password } = registrationData;
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const newPerson = await pool.query(
+  //Find wether this user exists
+  const user = await pool.query(`SELECT * FROM users where email = $1`, [
+    email,
+  ]);
+
+  //IF yes - 409 and exit
+  if (user.rows[0]) {
+    throw new AlreadyRegisteredError(
+      `User with email: ${email} already exists`
+    );
+  }
+
+  //Save new user to DB
+  const newUser = await pool.query(
     `INSERT INTO users(first_name, last_name, email, phone, password) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
     [first_name, last_name, email, phone, hashedPassword]
   );
 
-  return newPerson.rows[0];
+  return newUser.rows[0];
 };
 
 const getUserById = async (id) => {

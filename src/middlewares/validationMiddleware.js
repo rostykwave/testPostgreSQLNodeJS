@@ -22,7 +22,6 @@ module.exports = {
       password: Joi.string()
         .pattern(/^[0-9a-zA-Z.]+$/)
         .required(),
-      //   phone: Joi.number().min(6).max(14).required(),
     });
 
     const validationResult = schema.validate(req.body);

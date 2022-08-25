@@ -24,10 +24,17 @@ class NotAuthorizedError extends Post26Error {
     this.status = 401;
   }
 }
+class AlreadyRegisteredError extends Post26Error {
+  constructor(message) {
+    super(message);
+    this.status = 409;
+  }
+}
 
 module.exports = {
   Post26Error,
   ValidationError,
   WromgParametersError,
   NotAuthorizedError,
+  AlreadyRegisteredError,
 };

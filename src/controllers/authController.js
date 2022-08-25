@@ -8,8 +8,14 @@ const {
 const registrationController = async (req, res) => {
   const registrationData = req.body;
   const newUser = await registration(registrationData);
+  const { email } = newUser;
 
-  res.json({ status: "success", newUser });
+  res
+    .status(201)
+    .json({
+      status: "success",
+      message: `User with email ${email} successfully created. `,
+    });
 };
 
 const getUserByIdController = async (req, res) => {
