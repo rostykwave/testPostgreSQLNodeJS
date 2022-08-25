@@ -37,7 +37,28 @@ const updateUserById = async (id, updatedUserData) => {
   return updatedUser.rows[0];
 };
 
-const login = async (email, password) => {};
+const login = async (email, password) => {
+    // const user = await User.findOne({ email });
+  const user = 'rhyrhyh';
+
+    if (!user) {
+      throw new NotAuthorizedError(`No user with email '${email}' found`);
+    }
+
+    if (!(await bcrypt.compare(password, user.password))) {
+      throw new NotAuthorizedError(`Wrong password`);
+    }
+
+    const token = jwt.sign(
+      {
+        _id: user._id,
+        createdAt: user.createdAt,
+      },
+      process.env.JWT_SECRET
+    );
+
+    return token;
+};
 
 module.exports = {
   registration,

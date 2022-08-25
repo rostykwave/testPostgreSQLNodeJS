@@ -7,9 +7,6 @@ const {
 
 const registrationController = async (req, res) => {
   const registrationData = req.body;
-  // console.log("registrationData", registrationData);
-
-  // await registration(registrationData);
   const newUser = await registration(registrationData);
 
   res.json({ status: "success", newUser });
@@ -17,23 +14,25 @@ const registrationController = async (req, res) => {
 
 const getUserByIdController = async (req, res) => {
   const { id } = req.params;
+  const user = await getUserById(id);
 
-  console.log("id", id);
-
-  const User = await getUserById(id);
-
-  res.json({ status: "success", User });
+  res.json({ status: "success", user });
 };
 
 const updateUserByIdController = async (req, res) => {
   const { id } = req.params;
   const updatedUserData = req.body;
-  console.log("id", id);
   const updatedUser = await updateUserById(id, updatedUserData);
   res.json({ status: "success", updatedUser });
 };
 
-const loginController = async (req, res) => {};
+const loginController = async (req, res) => {
+    const { email, password } = req.body;
+
+    const token = await login(email, password);
+
+    res.json({ status: "success", token });
+};
 
 module.exports = {
   registrationController,
