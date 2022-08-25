@@ -81,7 +81,7 @@ const login = async (email, password) => {
 
   const token = jwt.sign(
     {
-      _id: user.rows[0]._id,
+      id: user.rows[0].id,
       createdAt: user.rows[0].createdAt,
     },
     process.env.JWT_SECRET

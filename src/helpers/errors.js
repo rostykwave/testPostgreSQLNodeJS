@@ -12,12 +12,6 @@ class ValidationError extends Post26Error {
   }
 }
 
-class WromgParametersError extends Post26Error {
-  constructor(message) {
-    super(message);
-    this.status = 400;
-  }
-}
 class NotAuthorizedError extends Post26Error {
   constructor(message) {
     super(message);
@@ -40,7 +34,6 @@ class NotFoundError extends Post26Error {
 module.exports = {
   Post26Error,
   ValidationError,
-  WromgParametersError,
   NotAuthorizedError,
   AlreadyRegisteredError,
   NotFoundError,
