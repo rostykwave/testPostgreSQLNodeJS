@@ -1,7 +1,10 @@
 const express = require("express");
 const router = new express.Router();
 
-const { addUserValidation } = require("../middlewares/validationMiddleware");
+const {
+  addUserValidation,
+  updateUserValidation,
+} = require("../middlewares/validationMiddleware");
 const { authMiddleware } = require("../middlewares/authMiddleware");
 const { asyncWrapper } = require("../helpers/apiHelpers");
 const {
@@ -17,6 +20,10 @@ router.post("/login", asyncWrapper(loginController));
 router.use(authMiddleware);
 
 router.get("/users/:id", asyncWrapper(getUserByIdController));
-router.put("/users/:id", asyncWrapper(updateUserByIdController));
+router.put(
+  "/users/:id",
+  updateUserValidation,
+  asyncWrapper(updateUserByIdController)
+);
 
 module.exports = { authRouter: router };
