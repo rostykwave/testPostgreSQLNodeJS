@@ -30,6 +30,12 @@ class AlreadyRegisteredError extends Post26Error {
     this.status = 409;
   }
 }
+class NotFoundError extends Post26Error {
+  constructor(message) {
+    super(message);
+    this.status = 404;
+  }
+}
 
 module.exports = {
   Post26Error,
@@ -37,4 +43,5 @@ module.exports = {
   WromgParametersError,
   NotAuthorizedError,
   AlreadyRegisteredError,
+  NotFoundError,
 };

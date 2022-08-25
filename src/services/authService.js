@@ -4,25 +4,23 @@ const { pool } = require("../db/connection");
 const {
   NotAuthorizedError,
   AlreadyRegisteredError,
+  NotFoundError,
 } = require("../helpers/errors");
 
 const registration = async (registrationData) => {
   const { first_name, last_name, email, phone, password } = registrationData;
   const hashedPassword = await bcrypt.hash(password, 10);
   const normalizedEmail = email.toLowerCase().trim();
-
   //Find wether this user exists
   const user = await pool.query(`SELECT * FROM users where email = $1`, [
     normalizedEmail,
   ]);
-
   //IF yes - 409 and exit
   if (user.rows[0]) {
     throw new AlreadyRegisteredError(
       `User with email: ${normalizedEmail} already exists`
     );
   }
-
   //Save new user to DB
   const newUser = await pool.query(
     `INSERT INTO users(first_name, last_name, email, phone, password) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
@@ -33,7 +31,14 @@ const registration = async (registrationData) => {
 };
 
 const getUserById = async (id) => {
-  const user = await pool.query(`SELECT * FROM users where id = $1`, [id]);
+  const user = await pool.query(
+    `SELECT first_name, last_name,email,phone FROM users where id = $1`,
+    [id]
+  );
+
+  if (!user.rows[0]) {
+    throw new NotFoundError(`User with id: ${id} not found`);
+  }
 
   return user.rows[0];
 };
