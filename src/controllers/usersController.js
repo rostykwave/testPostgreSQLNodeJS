@@ -1,6 +1,7 @@
 const { getUserById, updateUserById } = require("../services/usersService");
 const jwt = require("jsonwebtoken");
 const { NotAuthorizedError } = require("../helpers/errors");
+const app = require("../../app");
 
 const getUserByIdController = async (req, res) => {
   const { id } = req.params;
@@ -22,6 +23,14 @@ const updateUserByIdController = async (req, res) => {
   }
   const updatedUserData = req.body;
   const updatedUser = await updateUserById(id, updatedUserData);
+
+  // const io = app.io();
+  // console.log("app.io", req.app.io);
+
+  req.app.io.emit("contact_update", updatedUser);
+  // req.app.io.on("connection", (socket) => {
+  //   socket.emit("hello", "word");
+  // });
 
   res.json({ status: "success", updatedUser });
 };

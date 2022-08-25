@@ -16,6 +16,7 @@ io.on("connection", (socket) => {
     // io.emit("CHAT_UPDATE", { message, username });
   });
 });
+app.io = io;
 
 const PORT = process.env.PORT || 3000;
 
