@@ -9,23 +9,24 @@ const {
 const registration = async (registrationData) => {
   const { first_name, last_name, email, phone, password } = registrationData;
   const hashedPassword = await bcrypt.hash(password, 10);
+  const normalizedEmail = email.toLowerCase().trim();
 
   //Find wether this user exists
   const user = await pool.query(`SELECT * FROM users where email = $1`, [
-    email,
+    normalizedEmail,
   ]);
 
   //IF yes - 409 and exit
   if (user.rows[0]) {
     throw new AlreadyRegisteredError(
-      `User with email: ${email} already exists`
+      `User with email: ${normalizedEmail} already exists`
     );
   }
 
   //Save new user to DB
   const newUser = await pool.query(
     `INSERT INTO users(first_name, last_name, email, phone, password) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-    [first_name, last_name, email, phone, hashedPassword]
+    [first_name, last_name, normalizedEmail, phone, hashedPassword]
   );
 
   return newUser.rows[0];
@@ -49,13 +50,16 @@ const updateUserById = async (id, updatedUserData) => {
 };
 
 const login = async (email, password) => {
+  const normalizedEmail = email.toLowerCase().trim();
+
   const user = await pool.query(`SELECT * FROM users where email = $1`, [
-    email,
+    normalizedEmail,
   ]);
-  console.log("logined user", user.rows[0]);
 
   if (!user.rows[0]) {
-    throw new NotAuthorizedError(`No user with email '${email}' found`);
+    throw new NotAuthorizedError(
+      `No user with email '${normalizedEmail}' found`
+    );
   }
 
   if (!(await bcrypt.compare(password, user.rows[0].password))) {
