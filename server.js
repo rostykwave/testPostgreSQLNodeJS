@@ -10,9 +10,11 @@ io.on("connection", (socket) => {
   //   console.log("emit", emit);
   //   io.emit("contact update", updatedContact);
   // });
-  // socket.on("CHAT_MESSAGE", ({ message, username }) => {
-  //   io.emit("CHAT_UPDATE", { message, username });
-  // });
+
+  socket.on("MESSAGE", ({ message }) => {
+    console.log("message", message);
+    // io.emit("CHAT_UPDATE", { message, username });
+  });
 });
 
 const PORT = process.env.PORT || 3000;

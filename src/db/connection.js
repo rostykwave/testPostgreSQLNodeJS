@@ -5,11 +5,6 @@ const pool = new Pool({
   host: process.env.PGHOST,
   port: process.env.PGPORT,
   database: process.env.PGDATABASE,
-  // user: "postgres",
-  // password: "wbbbbbbe",
-  // host: "localhost",
-  // port: 5432,
-  // database: "testdb",
 });
 
 // pool.connect();

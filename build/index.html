@@ -14,17 +14,23 @@
       window.addEventListener("load", () => {
         const socket = io();
 
-        socket.on("contact update", function (msg) {
-          console.log("msg", msg);
-          var item = document.createElement("li");
-          item.textContent = msg;
-          messages.appendChild(item);
-          window.scrollTo(0, document.body.scrollHeight);
+        const button = document.getElementById("Socket-btn");
+
+        button.addEventListener("click", (e) => {
+          socket.emit("MESSAGE", { message: "Socket-btn" });
         });
+
+        // socket.on("contact update", function (msg) {
+        //   var item = document.createElement("li");
+        //   item.textContent = msg;
+        //   messages.appendChild(item);
+        //   window.scrollTo(0, document.body.scrollHeight);
+        // });
       });
     </script>
   </head>
   <body>
+    <button type="button" id="Socket-btn">Socket.io</button>
     <ul id="notifications"></ul>
   </body>
 </html>
