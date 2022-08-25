@@ -3,7 +3,6 @@ const { NotAuthorizedError } = require("../helpers/errors");
 
 const authMiddleware = (req, res, next) => {
   try {
-    //validate token type
     const { authorization } = req.headers;
 
     if (!authorization) {
@@ -21,7 +20,6 @@ const authMiddleware = (req, res, next) => {
     }
 
     const user = jwt.decode(token, process.env.JWT_SECRET);
-    console.log("user", user);
 
     req.token = token;
     req.user = user;

@@ -1,6 +1,5 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-// const { User } = require("../db/userModel");
 const { pool } = require("../db/connection");
 const { NotAuthorizedError } = require("../helpers/errors");
 
@@ -9,13 +8,11 @@ const registration = async (registrationData) => {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const newPerson = await pool.query(
-    `INSERT INTO users(id,first_name, last_name, email, phone, password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-    [10, first_name, last_name, email, phone, hashedPassword]
+    `INSERT INTO users(first_name, last_name, email, phone, password) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+    [first_name, last_name, email, phone, hashedPassword]
   );
 
-  //   await user.save();
   return newPerson.rows[0];
-  // return registrationData;
 };
 
 const getUserById = async (id) => {
@@ -26,7 +23,6 @@ const getUserById = async (id) => {
 
 const updateUserById = async (id, updatedUserData) => {
   const { first_name, last_name, email, phone, password } = updatedUserData;
-  console.log("email", email);
 
   const updatedUser = await pool.query(
     `UPDATE users set first_name = $1, last_name = $2, email = $3, phone = $4, password = $5 where id = $6 RETURNING *`,
@@ -40,7 +36,7 @@ const login = async (email, password) => {
   const user = await pool.query(`SELECT * FROM users where email = $1`, [
     email,
   ]);
-  console.log("user", user.rows[0]);
+  console.log("logined user", user.rows[0]);
 
   if (!user.rows[0]) {
     throw new NotAuthorizedError(`No user with email '${email}' found`);
