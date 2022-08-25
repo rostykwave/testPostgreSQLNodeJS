@@ -11,8 +11,8 @@ const {
   loginController,
 } = require("../controllers/authController");
 
-router.post("/login", asyncWrapper(loginController));
 router.post("/users", addUserValidation, asyncWrapper(registrationController));
+router.post("/login", asyncWrapper(loginController));
 
 router.use(authMiddleware);
 

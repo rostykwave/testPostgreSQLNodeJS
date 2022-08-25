@@ -5,10 +5,10 @@ module.exports = {
   addUserValidation: (req, res, next) => {
     const schema = Joi.object({
       first_name: Joi.string()
-        .pattern(/[a-z0-9 ]/i)
+        .pattern(/^[a-zA-Z]+$/)
         .required(),
       last_name: Joi.string()
-        .pattern(/[a-z0-9 ]/i)
+        .pattern(/^[a-zA-Z]+$/)
         .required(),
       email: Joi.string()
         .email({
@@ -20,7 +20,7 @@ module.exports = {
         .pattern(/^\+?3?8?(0[5-9][0-9]\d{7})$/)
         .required(),
       password: Joi.string()
-        .pattern(/[a-z0-9]/i)
+        .pattern(/^[0-9a-zA-Z.]+$/)
         .required(),
       //   phone: Joi.number().min(6).max(14).required(),
     });
