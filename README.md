@@ -1,5 +1,8 @@
 # testPostgreSQLNodeJS
 
+//npm run dev - to start project with nodemon
+//npm start - without nodemon
+
 Current build uses /////////.env ////////////with the variables:
 
 PORT=3001 - local server's port
