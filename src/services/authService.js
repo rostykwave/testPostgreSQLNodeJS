@@ -4,7 +4,6 @@ const { pool } = require("../db/connection");
 const {
   NotAuthorizedError,
   AlreadyRegisteredError,
-  NotFoundError,
 } = require("../helpers/errors");
 
 const registration = async (registrationData) => {

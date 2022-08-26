@@ -1,18 +1,18 @@
 # testPostgreSQLNodeJS
 
-Current build uses .env file to provide information:
-PORT
-JWT_SECRET
+Current build uses /////////.env ////////////with the variables:
+
+PORT=3001 - local server's port
+JWT_SECRET - secret word for JSON Web Token
+
 (data related to PostgreSQL)
-PGUSER
+PGUSER="postgres"
 PGPASSWORD
-PGHOST
-PGPORT
+PGHOST='localhost'
+PGPORT=5432
 PGDATABASE
 
-JWT_SECRET was sent to You on email with link on this test.
-
-To build SQL data base was used code:
+////////////SQL table structure:///////////////
 
 CREATE TABLE users (
 id SERIAL PRIMARY KEY,
@@ -25,3 +25,16 @@ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 PS(it is also stored in src/db/database.sql)
+
+////////////////Socket.io/////////////////////
+Current server is using socket.io at http://localhost:3001/
+It sends allert and logs information when someone successfully update user info at /users/:id PUT request.
+
+////////////////Routes////////////////////////
+Ability to update user info with /users/:id PUT request has only user who provided valid token, associated with this account.
+
+/users/:id GET uses token, but it doesn't nessesary must be related to this request (You can view general info about other users).
+
+/login POST requires valid email and password, it responses with token.
+
+/users POST adds new user with valid information, hashes password, normalizes email to Lower_case and stores in database.

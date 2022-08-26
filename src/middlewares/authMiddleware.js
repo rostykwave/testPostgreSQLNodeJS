@@ -13,7 +13,7 @@ const authMiddleware = (req, res, next) => {
       );
     }
 
-    const [tokenType, token] = authorization.split(" ");
+    const [_, token] = authorization.split(" ");
 
     if (!token) {
       next(new NotAuthorizedError("Please, provide a token"));
