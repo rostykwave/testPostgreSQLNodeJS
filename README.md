@@ -1,7 +1,7 @@
 # testPostgreSQLNodeJS
 
-//npm run dev - to start project with nodemon
-//npm start - without nodemon
+- npm run dev - to start project with nodemon
+- npm start - without nodemon
 
 ## .env
 
@@ -10,7 +10,7 @@ Current build uses .env with the variables:
 - PORT=3001 - local server's port
 - JWT_SECRET - secret word for JSON Web Token
 
-- (data related to PostgreSQL)
+- - (data related to PostgreSQL)
 - PGUSER="postgres"
 - PGPASSWORD
 - PGHOST='localhost'
