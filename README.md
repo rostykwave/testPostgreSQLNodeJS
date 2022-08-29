@@ -7,16 +7,15 @@
 
 Current build uses .env with the variables:
 
-[^1]:
-    PORT=3001 - local server's port
-    JWT_SECRET - secret word for JSON Web Token
+- PORT=3001 - local server's port
+- JWT_SECRET - secret word for JSON Web Token
 
-(data related to PostgreSQL)
-[^note]: PGUSER="postgres"
-[^note]: PGPASSWORD
-[^note]: PGHOST='localhost'
-[^note]: PGPORT=5432
-[^note]: PGDATABASE
+- (data related to PostgreSQL)
+- PGUSER="postgres"
+- PGPASSWORD
+- PGHOST='localhost'
+- PGPORT=5432
+- PGDATABASE
 
 ## SQL table structure:
 
