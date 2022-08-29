@@ -19,15 +19,15 @@ Current build uses .env with the variables:
 
 ## SQL table structure:
 
-CREATE TABLE users (
-id SERIAL PRIMARY KEY,
-first_name VARCHAR(30),
-last_name VARCHAR(30),
-email VARCHAR(30) UNIQUE,
-phone VARCHAR(30),
-password VARCHAR(60),
-created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+> CREATE TABLE users (
+> id SERIAL PRIMARY KEY,
+> first_name VARCHAR(30),
+> last_name VARCHAR(30),
+> email VARCHAR(30) UNIQUE,
+> phone VARCHAR(30),
+> password VARCHAR(60),
+> created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+> );
 
 PS(it is also stored in src/db/database.sql)
 
